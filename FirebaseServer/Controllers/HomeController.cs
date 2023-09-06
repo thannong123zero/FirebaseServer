@@ -1,4 +1,5 @@
 ﻿using FirebaseServer.Models;
+using FirebaseServer.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,14 +8,16 @@ namespace FirebaseServer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly FirebaseService _firebaseService;
+        public HomeController(ILogger<HomeController> logger, FirebaseService firebaseService)
         {
             _logger = logger;
+            _firebaseService = firebaseService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
+            _firebaseService.CreateServiceFaireBase();
             return View();
         }
 
